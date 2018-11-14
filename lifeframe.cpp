@@ -90,16 +90,16 @@ int* LifeFrame::step()
     return curFrame;
 }
 
-int LifeFrame::cell(int x, int y)
+int LifeFrame::cell(int y, int x)
 {
-    if (x < 0)
-        x = size - 1;
     if (y < 0)
         y = size - 1;
-    if (x > size - 1)
-        x = 0;
     if (y > size - 1)
         y = 0;
-    return (curFrame != nullptr) ? curFrame[y*size + x] : 0;
+    if (x < 0)
+        x = size - 1;
+    if (x > size - 1)
+        x = 0;
+    return curFrame[y*size + x];
 }
 
