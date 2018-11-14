@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "qcustomplot.h"
+#include "lifeframe.h"
 #include <QSpinBox>
 #include <QTimer>
 
@@ -15,7 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void drawPlot();
 
@@ -24,22 +25,17 @@ public slots:
     void startCalc();
     void stopCalc();
     void Calc();
-    double delta();
 
 private:
     Ui::MainWindow *ui;
     QTimer timer;
+    LifeFrame* lifeframe;
 
     QCustomPlot* plot;
     QCPColorMap* colorMap;
     QCPColorScale *colorScale;
     int typePlot;
     QSpinBox *valuePlot;
-
-    int sizeX;
-    int sizeY;
-    double* thermalArray;
-    double* nextThermalArray;
 };
 
 #endif // MAINWINDOW_H
