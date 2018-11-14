@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&timer, SIGNAL(timeout()), this, SLOT(Calc()));
     QObject::connect(ui->startButton, SIGNAL(pressed()), this, SLOT(startCalc()));
     QObject::connect(ui->stopButton, SIGNAL(pressed()), this, SLOT(stopCalc()));
+    QObject::connect(ui->generateButton, SIGNAL(pressed()), this, SLOT(generateBtn()));
+    QObject::connect(ui->sickButton, SIGNAL(pressed()), this, SLOT(sickBtn()));
     QObject::connect(ui->XpointBox, SIGNAL(valueChanged(int)), this, SLOT(resizeArray()));
     QObject::connect(ui->YpointBox, SIGNAL(valueChanged(int)), this, SLOT(resizeArray()));
 
@@ -95,4 +97,14 @@ void MainWindow::Calc()
     lifeframe->step();
     drawPlot();
     ui->iterationBox->setValue(lifeframe->getStepNumber());
+}
+
+void MainWindow::generateBtn()
+{
+    qDebug() << "Generate";
+}
+
+void MainWindow::sickBtn()
+{
+    qDebug() << "Sick";
 }

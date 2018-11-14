@@ -25,6 +25,8 @@ public slots:
     void startCalc();
     void stopCalc();
     void Calc();
+    void generateBtn();
+    void sickBtn();
 
 private:
     Ui::MainWindow *ui;
