@@ -7,10 +7,11 @@ class LifeFrame : public QObject
     Q_OBJECT
 public:
     explicit LifeFrame(QObject *parent = nullptr);
-    explicit LifeFrame(int initSize, QObject *parent = nullptr);
+    explicit LifeFrame(int initSizeX, int initSizeY, QObject *parent = nullptr);
     ~LifeFrame();
-    int* resizeFrame(int size);
-    int getFrameSize();
+    int* resizeFrame(int initSizeX, int initSizeY);
+    int getFrameSizeX();
+    int getFrameSizeY();
     int getStepNumber();
     int* getCurFrame();
     int* getColonyStatistic();
@@ -20,7 +21,8 @@ public:
     int cell(int x, int y);
 
 private:
-    int size;
+    int sizeX;
+    int sizeY;
     int stepNumber;
     int colonyNumber;
     int* curFrame;

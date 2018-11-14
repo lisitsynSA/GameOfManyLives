@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    lifeframe = new LifeFrame(100, this);
+    lifeframe = new LifeFrame(100, 100, this);
 
     plot = new QCustomPlot(this);
     colorMap = new QCPColorMap(plot->xAxis, plot->yAxis);
@@ -46,8 +46,8 @@ MainWindow::~MainWindow()
 void MainWindow::drawPlot()
 {
     showStatistic();
-    int sizeX = lifeframe->getFrameSize();
-    int sizeY = lifeframe->getFrameSize();
+    int sizeX = lifeframe->getFrameSizeX();
+    int sizeY = lifeframe->getFrameSizeY();
     int* curFrame = lifeframe->getCurFrame();
     plot->xAxis->setLabel("Axis X");
     plot->yAxis->setLabel("Axis Y");
@@ -70,7 +70,7 @@ void MainWindow::drawPlot()
 void MainWindow::resizeArray()
 {
     qDebug() << "Resize";
-    lifeframe->resizeFrame(ui->XpointBox->value());
+    lifeframe->resizeFrame(ui->XpointBox->value(), ui->YpointBox->value());
     lifeframe->random(ui->colonyBox->value());
     drawPlot();
 }
