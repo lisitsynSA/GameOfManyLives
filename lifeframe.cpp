@@ -6,6 +6,8 @@ LifeFrame::LifeFrame(QObject *parent) :
 {
     curFrame = nullptr;
     nextFrame = nullptr;
+    colonyStatistic = nullptr;
+    colonyTMP = nullptr;
     size = 0;
     stepNumber = 0;
 }
@@ -26,6 +28,10 @@ LifeFrame::~LifeFrame()
         delete curFrame;
     if (nextFrame != nullptr)
         delete nextFrame;
+    if (colonyStatistic != nullptr)
+        delete colonyStatistic;
+    if (colonyTMP != nullptr)
+        delete colonyTMP;
 }
 
 int* LifeFrame::resizeFrame(int initSize)
@@ -62,18 +68,36 @@ int* LifeFrame::getCurFrame()
     return curFrame;
 }
 
-int* LifeFrame::random()
+int* LifeFrame::getColonyStatistic()
 {
+    return colonyStatistic;
+}
+
+int* LifeFrame::random(int initColonyNumber)
+{
+    colonyNumber = initColonyNumber;
+    if (colonyStatistic != nullptr)
+        delete colonyStatistic;
+    colonyStatistic = new int[colonyNumber];
+    if (colonyTMP != nullptr)
+        delete colonyTMP;
+    colonyTMP = new int[colonyNumber];
     stepNumber = 0;
     for (int ny = 0; ny < size; ny++)
     for (int nx = 0; nx < size; nx++)
-        curFrame[ny*size + nx] = qrand() % 2;
+        curFrame[ny*size + nx] = qrand()%2 == 1 ? (qrand()%colonyNumber + 1) : 0;
     return curFrame;
 }
 
 int* LifeFrame::step()
 {
     int sum = 0;
+    for (int colony = 0; colony < colonyNumber; colony++)
+    {
+        colonyTMP[colony] = 0;
+        colonyStatistic[colony] = 0;
+    }
+
     for (int y = 0; y < size; y++)
     for (int x = 0; x < size; x++)
     {
@@ -81,8 +105,16 @@ int* LifeFrame::step()
                 cell(y, x-1) + cell(y, x+1) +\
                 cell(y+1, x-1) + cell(y+1, x) + cell(y+1, x+1);
         nextFrame[y*size + x] = 0;
-        if ((sum == 3) || (sum == 2 && curFrame[y*size + x] == 1))
-            nextFrame[y*size + x] = 1;
+        if (curFrame[y*size + x] > 0 && (sum == 2 || sum == 3))
+            nextFrame[y*size + x] = curFrame[y*size + x];
+        if (curFrame[y*size + x] == 0 && sum == 3)
+            for (int colony = 1; colony < colonyNumber; colony++)
+            {
+                if (colonyTMP[colony] > 1)
+                    nextFrame[y*size + x] = colony;
+                colonyTMP[colony] = 0;
+            }
+        colonyTMP[nextFrame[y*size + x]]++;
     }
 
     stepNumber++;
@@ -100,6 +132,11 @@ int LifeFrame::cell(int y, int x)
         x = size - 1;
     if (x > size - 1)
         x = 0;
-    return curFrame[y*size + x];
+    if (curFrame[y*size + x] > 0)
+    {
+        colonyTMP[curFrame[y*size + x]]++;
+        return 1;
+    }
+    return 0;
 }
 

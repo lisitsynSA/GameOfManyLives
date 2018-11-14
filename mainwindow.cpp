@@ -33,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->stopButton, SIGNAL(pressed()), this, SLOT(stopCalc()));
     QObject::connect(ui->generateButton, SIGNAL(pressed()), this, SLOT(generateBtn()));
     QObject::connect(ui->sickButton, SIGNAL(pressed()), this, SLOT(sickBtn()));
+    QObject::connect(ui->stepButton, SIGNAL(pressed()), this, SLOT(stepBtn()));
     QObject::connect(ui->XpointBox, SIGNAL(valueChanged(int)), this, SLOT(resizeArray()));
     QObject::connect(ui->YpointBox, SIGNAL(valueChanged(int)), this, SLOT(resizeArray()));
-
 }
 
 MainWindow::~MainWindow()
@@ -45,8 +45,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::drawPlot()
 {
-    int minVal = 4;
-    int maxVal = 0;
     int sizeX = lifeframe->getFrameSize();
     int sizeY = lifeframe->getFrameSize();
     int* curFrame = lifeframe->getCurFrame();
@@ -59,11 +57,9 @@ void MainWindow::drawPlot()
     for (int ny = 0; ny < sizeY; ny++)
     {
         colorMap->data()->setCell(nx, ny, curFrame[nx*sizeY + ny]);
-        minVal = std::min(minVal, curFrame[nx*sizeY + ny]);
-        maxVal = std::max(maxVal, curFrame[nx*sizeY + ny]);
     }
 
-    colorScale->setDataRange(QCPRange(minVal, maxVal));
+    colorScale->setDataRange(QCPRange(0, ui->colonyBox->value()));
     colorMap->rescaleDataRange(true);
     plot->rescaleAxes();
     plot->replot();
@@ -74,7 +70,7 @@ void MainWindow::resizeArray()
 {
     qDebug() << "Resize";
     lifeframe->resizeFrame(ui->XpointBox->value());
-    lifeframe->random();
+    lifeframe->random(ui->colonyBox->value());
     drawPlot();
 }
 
@@ -102,9 +98,17 @@ void MainWindow::Calc()
 void MainWindow::generateBtn()
 {
     qDebug() << "Generate";
+    lifeframe->random(ui->colonyBox->value());
+    drawPlot();
 }
 
 void MainWindow::sickBtn()
 {
     qDebug() << "Sick";
+}
+
+void MainWindow::stepBtn()
+{
+    qDebug() << "Step";
+    Calc();
 }

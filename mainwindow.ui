@@ -26,10 +26,27 @@
     </item>
     <item row="0" column="1">
      <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="1">
+       <widget class="QPushButton" name="sickButton">
+        <property name="text">
+         <string>Зараженная клетка</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Количество колоний</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QSpinBox" name="iterationBox">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="maximum">
+         <number>999999999</number>
         </property>
        </widget>
       </item>
@@ -104,13 +121,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="sickButton">
-        <property name="text">
-         <string>Зараженная клетка</string>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
@@ -118,13 +128,10 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="QSpinBox" name="iterationBox">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="maximum">
-         <number>999999999</number>
+      <item row="6" column="0">
+       <widget class="QPushButton" name="stepButton">
+        <property name="text">
+         <string>Шаг</string>
         </property>
        </widget>
       </item>

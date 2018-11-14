@@ -13,15 +13,19 @@ public:
     int getFrameSize();
     int getStepNumber();
     int* getCurFrame();
-    int* random();
+    int* getColonyStatistic();
+    int* random(int initColonyNumber);
     int* step();
     int cell(int x, int y);
 
 private:
     int size;
     int stepNumber;
+    int colonyNumber;
     int* curFrame;
     int* nextFrame;
+    int* colonyStatistic;
+    int* colonyTMP;
 };
 
 #endif // LIFEFRAME_H
