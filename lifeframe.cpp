@@ -122,17 +122,18 @@ int* LifeFrame::step()
         // born cell
         if (curFrame[y*size + x] == 0 && sum == 3)
             for (int colony = 1; colony <= colonyNumber; colony++)
-            {
                 if (colonyTMP[colony] > 1)
                     nextFrame[y*size + x] = colony;
-                colonyTMP[colony] = 0;
-            }
         // check sick
         if (nextFrame[y*size + x] > 0 && colonyTMP[colonyNumber + 1] > 0)
             nextFrame[y*size + x] = colonyNumber + 1;
         colonyTMP[colonyNumber + 1] = 0;
         //get colony statistic
         colonyStatistic[nextFrame[y*size + x]]++;
+        for (int colony = 1; colony <= colonyNumber; colony++)
+        {
+            colonyTMP[colony] = 0;
+        }
     }
 
     stepNumber++;
