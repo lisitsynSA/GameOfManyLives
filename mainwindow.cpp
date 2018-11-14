@@ -93,6 +93,7 @@ void MainWindow::Calc()
     lifeframe->step();
     drawPlot();
     ui->iterationBox->setValue(lifeframe->getStepNumber());
+    showStatistic();
 }
 
 void MainWindow::generateBtn()
@@ -100,6 +101,7 @@ void MainWindow::generateBtn()
     qDebug() << "Generate";
     lifeframe->random(ui->colonyBox->value());
     drawPlot();
+    showStatistic();
 }
 
 void MainWindow::sickBtn()
@@ -112,3 +114,15 @@ void MainWindow::stepBtn()
     qDebug() << "Step";
     Calc();
 }
+
+void MainWindow::showStatistic()
+{
+    printf("[%d] ", lifeframe->getStepNumber());
+    for (int colony = 0; colony < lifeframe->getColonyNumber() + 2; colony++)
+    {
+        printf("%d ", lifeframe->getColonyStatistic()[colony]);
+    }
+    printf("\n");
+    fflush( stdout );
+}
+

@@ -28,6 +28,7 @@ public slots:
     void generateBtn();
     void sickBtn();
     void stepBtn();
+    void showStatistic();
 
 private:
     Ui::MainWindow *ui;

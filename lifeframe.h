@@ -14,6 +14,7 @@ public:
     int getStepNumber();
     int* getCurFrame();
     int* getColonyStatistic();
+    int getColonyNumber();
     int* random(int initColonyNumber);
     int* step();
     int cell(int x, int y);
@@ -24,7 +25,7 @@ private:
     int colonyNumber;
     int* curFrame;
     int* nextFrame;
-    int* colonyStatistic;
+    int* colonyStatistic; // [0] - dead cells; [colonyNumber] - sick cells
     int* colonyTMP;
 };
 
